@@ -1,22 +1,27 @@
 import { test, expect } from '@playwright/test';
 
-test('test', async ({ page }) => {
+test('Login and update resume on Naukri', async ({ page }) => {
+  await page.goto('https://www.naukri.com/nlogin/login');
 
-  await page.goto('https://www.naukri.com/nlogin/login?utm_source=google&utm_medium=cpc&utm_campaign=Brand&gad_source=1&gclid=CjwKCAjwo6GyBhBwEiwAzQTmc34DfBd9dNPPn_R_W3UozmHxoGFxQRepNJgOcFPHLMUoYhEwNErtOxoC6a0QAvD_BwE&gclsrc=aw.ds');
- 
-  // ✅ Fill in the email and password fields
-  await page.getByRole('textbox', { name: 'Enter Email ID / Username' }).fill('sayhitosujith@gmail.com');
-  await page.getByRole('textbox', { name: 'Enter Password' }).fill('Qw@12345678');
+  // Wait for the email field and fill in credentials
+  await page.locator('input[placeholder="Enter Email ID / Username"]').waitFor({ timeout: 10000 });
+  await page.locator('input[placeholder="Enter Email ID / Username"]').fill('sayhitosujith@gmail.com');
+  await page.locator('input[placeholder="Enter Password"]').fill('Qw@12345678');
+
+  // Click login
   await page.getByRole('button', { name: 'Login', exact: true }).click();
 
-  // ✅ Wait for "View profile" to be visible — ensures login is successful
-  await expect(page.getByRole('link', { name: 'View profile' })).toBeVisible();
+  // Wait for dashboard to load
+  await page.waitForLoadState('networkidle');
+  await expect(page.getByRole('link', { name: 'View profile' })).toBeVisible({ timeout: 15000 });
 
+  // Navigate and update resume
   await page.getByRole('link', { name: 'View profile' }).click();
   await page.getByRole('listitem').filter({ hasText: 'Resume headline' }).locator('span').click();
   await page.locator('#lazyResumeHead').getByText('editOneTheme').click();
   await page.getByRole('button', { name: 'Save' }).click();
+
+  // Logout
   await page.getByRole('img', { name: 'naukri user profile img' }).click();
   await page.getByText('Logout').click();
-
 });
