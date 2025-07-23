@@ -11,12 +11,14 @@ test('Login and update resume on Naukri', async ({ page }) => {
   // Try locating input
   const usernameField = page.locator('input[name="username"]');
   await usernameField.waitFor({ timeout: 10000 }); // Wait until it's visible
-  // Wait for the email field and fill in credentials
-await page.locator('#usernameField').fill('sayhitosujith@gmail.com');
-await page.locator('#passwordField').fill('Qw@12345678');
+  await usernameField.fill('sayhitosujith@gmail.com');
+
+  const passwordField = page.locator('input[name="password"]');
+  await passwordField.waitFor({ timeout: 10000 });
+  await passwordField.fill('Qw@12345678');
 
   // Click login
-  await page.getByRole('button', { name: 'Login', exact: true }).click();
+await page.getByRole('button', { name: 'Login' }).click();
 
   // Wait for dashboard to load
   await expect(page.getByRole('link', { name: 'View profile' })).toBeVisible({ timeout: 15000 });
