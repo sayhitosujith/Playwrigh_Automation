@@ -5,6 +5,8 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  schedule:
+    - cron: '0 */5 * * *'  # Runs every 5 hours (UTC time)
 
 jobs:
   test:
@@ -45,10 +47,9 @@ jobs:
           name: playwright-traces
           path: test-results/**/trace.zip
 
-      - name: Upload Screenshots
+      - name: Upload Screenshots (if any)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-screenshots
           path: test-results/**/screenshot*
-
