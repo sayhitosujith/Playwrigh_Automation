@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test('test', async ({ page }) => {
 
   await page.goto('https://www.naukri.com/nlogin/login?utm_source=google&utm_medium=cpc&utm_campaign=Brand&gad_source=1&gclid=CjwKCAjwo6GyBhBwEiwAzQTmc34DfBd9dNPPn_R_W3UozmHxoGFxQRepNJgOcFPHLMUoYhEwNErtOxoC6a0QAvD_BwE&gclsrc=aw.ds');
-  await page.getByRole('textbox', { name: 'Enter Email ID / Username' }).waitFor({ timeout: 10000 });
+  await page.getByRole('textbox', { name: 'Enter Email ID / Username' }).waitFor({ timeout: 30000 });
  
   // ✅ Fill in the email and password fields
   await page.getByRole('textbox', { name: 'Enter Email ID / Username' }).fill('sayhitosujith@gmail.com');
