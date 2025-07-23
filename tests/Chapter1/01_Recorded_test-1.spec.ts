@@ -14,6 +14,6 @@ test('Navigate to Git hub with login credentials', async ({ page }) => {
 
   });
   await test.step('Verify successful login', async () => {
-    //await expect(page.getByRole('heading', { name: 'Sujith Reddy' })).toBeVisible();
+    //await expect(page.getByRole('heading', { name: 'Home' })).toBeVisible();
   });
 });
