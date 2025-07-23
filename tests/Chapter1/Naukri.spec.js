@@ -4,9 +4,8 @@ test('Login and update resume on Naukri', async ({ page }) => {
   await page.goto('https://www.naukri.com/nlogin/login');
 
   // Wait for the email field and fill in credentials
-  await page.locator('input[placeholder="Enter Email ID / Username"]').waitFor({ timeout: 10000 });
-  await page.locator('input[placeholder="Enter Email ID / Username"]').fill('sayhitosujith@gmail.com');
-  await page.locator('input[placeholder="Enter Password"]').fill('Qw@12345678');
+await page.locator('#usernameField').fill('sayhitosujith@gmail.com');
+await page.locator('#passwordField').fill('Qw@12345678');
 
   // Click login
   await page.getByRole('button', { name: 'Login', exact: true }).click();
