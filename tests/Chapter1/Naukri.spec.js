@@ -11,7 +11,6 @@ await page.locator('#passwordField').fill('Qw@12345678');
   await page.getByRole('button', { name: 'Login', exact: true }).click();
 
   // Wait for dashboard to load
-  await page.waitForLoadState('networkidle');
   await expect(page.getByRole('link', { name: 'View profile' })).toBeVisible({ timeout: 15000 });
 
   // Navigate and update resume
