@@ -5,11 +5,13 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  schedule:
+    - cron: '0 */5 * * *'  # Every 5 hours (UTC)
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 30  # Prevents hanging workflows
+    timeout-minutes: 30  # Prevent long-running workflows
 
     steps:
       - name: Checkout repository
@@ -24,21 +26,21 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright browsers
+      - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Run Playwright tests
+      - name: Run Playwright Tests
         run: npx playwright test --reporter=html,line
-        continue-on-error: true  # Let subsequent steps run even on test failure
+        continue-on-error: true
 
-      - name: Upload Playwright HTML Report
+      - name: Upload HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-html-report
           path: playwright-report/
 
-      - name: Upload Trace Files (if any)
+      - name: Upload Trace Files
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -51,4 +53,3 @@ jobs:
         with:
           name: playwright-screenshots
           path: test-results/**/screenshot*
-
