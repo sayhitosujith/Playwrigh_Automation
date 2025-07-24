@@ -5,8 +5,8 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  schedule:
-    - cron: '0 */5 * * *'  # Every 5 hours (UTC)
+  # schedule:
+  #   - cron: '0 */5 * * *'  # Every 5 hours (UTC)
 
 jobs:
   test:
