@@ -2,9 +2,9 @@ name: CI - Playwright Tests
 
 on:
   push:
-    branches: [main]
+    branches: [main, suj-01]
   pull_request:
-    branches: [main]
+    branches: [main, suj-01]
   schedule:
     - cron: '0 */5 * * *'  # Every 5 hours (UTC)
 
