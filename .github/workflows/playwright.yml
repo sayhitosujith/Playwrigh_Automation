@@ -12,33 +12,30 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    outputs:
-      cache-hit: ${{ steps.cache-node.outputs.cache-hit }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup Node.js
-        id: setup-node
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-
-      - name: Upload node_modules and playwright deps
+      - name: Restore node_modules and playwright cache
         uses: actions/cache@v4
         with:
           path: |
             node_modules
             ~/.cache/ms-playwright
           key: ${{ runner.os }}-node18-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
 
   run-tests:
     runs-on: ubuntu-latest
@@ -49,7 +46,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Restore cache (node_modules & playwright)
+      - name: Restore node_modules and playwright cache
         uses: actions/cache@v4
         with:
           path: |
@@ -82,11 +79,8 @@ jobs:
           name: playwright-screenshots
           path: test-results/**/screenshot*
 
-      - name: Summarize and post test results
+      - name: Summarize and Post Test Results
+        if: always()
         run: |
           echo "### Playwright Test Summary" >> $GITHUB_STEP_SUMMARY
-          if [ -f "playwright-report/index.html" ]; then
-            echo "[View HTML Report](playwright-report/)" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "❌ HTML Report not found." >> $GITHUB_STEP_SUMMARY
-          fi
+          echo "✅ Tests completed. Download the [HTML Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) from artifacts." >> $GITHUB_STEP_SUMMARY
