@@ -81,3 +81,12 @@ jobs:
         with:
           name: playwright-screenshots
           path: test-results/**/screenshot*
+
+      - name: Summarize and post test results
+        run: |
+          echo "### Playwright Test Summary" >> $GITHUB_STEP_SUMMARY
+          if [ -f "playwright-report/index.html" ]; then
+            echo "[View HTML Report](./playwright-report/index.html)" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ HTML Report not found." >> $GITHUB_STEP_SUMMARY
+          fi
