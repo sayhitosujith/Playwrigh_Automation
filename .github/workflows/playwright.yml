@@ -88,10 +88,21 @@ jobs:
   teardown:
     runs-on: ubuntu-latest
     needs: run-tests
-    if: always() # Always run even if previous jobs fail
+    if: always()
     steps:
       - name: Teardown or Cleanup
         run: |
-          echo "Cleaning up resources..."
-          # Add your custom cleanup commands here
-          # For example: docker stop, delete temp files, log final status
+          echo "🔧 Cleaning up resources..."
+          rm -rf /tmp/playwright* test-results/ playwright-report/
+          echo "🛑 Stopping any leftover Docker containers..."
+          docker stop $(docker ps -aq) || true
+          docker rm $(docker ps -aq) || true
+          echo "✅ Cleanup complete."
+
+      - name: Post Summary to Logs
+        run: |
+          if [ -d "playwright-report" ]; then
+            echo "✅ Report generated successfully." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Report missing. Investigate test failure." >> $GITHUB_STEP_SUMMARY
+
