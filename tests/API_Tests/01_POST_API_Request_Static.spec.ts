@@ -32,4 +32,8 @@ test('create POST API Request using static file in playwright and Typescript', a
     expect(jsonPOSTAPIResponse.bookingid).toBeGreaterThan(0);
     expect(jsonPOSTAPIResponse.booking.firstname).toBe('playwright typescript by SUJITH');
     expect(jsonPOSTAPIResponse.booking.lastname).toBe('playwright javascript by sadashivareddy');
+
+    expect(jsonPOSTAPIResponse.booking.bookingdates.checkin).toBe('2018-01-01');
+    expect(jsonPOSTAPIResponse.booking.bookingdates.checkout).toBe('2019-01-01');
+
 });
