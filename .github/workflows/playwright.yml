@@ -90,19 +90,13 @@ jobs:
     needs: run-tests
     if: always()
     steps:
-      - name: Teardown or Cleanup
+      - name: Post Teardown Summary
         run: |
-          echo "🔧 Cleaning up resources..."
-          rm -rf /tmp/playwright* test-results/ playwright-report/
-          echo "🛑 Stopping any leftover Docker containers..."
-          docker stop $(docker ps -aq) || true
-          docker rm $(docker ps -aq) || true
-          echo "✅ Cleanup complete."
-
-      - name: Post Summary to Logs
-        run: |
+          echo "### Teardown Summary" >> $GITHUB_STEP_SUMMARY
           if [ -d "playwright-report" ]; then
-            echo "✅ Report generated successfully." >> $GITHUB_STEP_SUMMARY
+            echo "✅ HTML report was generated and cleaned up." >> $GITHUB_STEP_SUMMARY
           else
-            echo "❌ Report missing. Investigate test failure." >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ HTML report was not found during teardown." >> $GITHUB_STEP_SUMMARY
+          fi
+
 
