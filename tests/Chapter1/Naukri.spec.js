@@ -1,11 +1,12 @@
 import { test, expect } from '@playwright/test';
 
-test('test', async ({ page }) => {
+test('Login to Naukri', async ({ page }) => {
   await page.goto('https://www.naukri.com/');
-  await page.getByRole('link', { name: 'Login', exact: true }).click();
-  await page.getByRole('textbox', { name: 'Enter your active Email ID /' }).click();
-  await page.getByRole('textbox', { name: 'Enter your active Email ID /' }).fill('sayhitosujith@gmail.com');
-  await page.getByRole('textbox', { name: 'Enter your password' }).click();
-  await page.getByRole('textbox', { name: 'Enter your password' }).fill('Qw@12345678');
-  await page.getByRole('button', { name: 'Login', exact: true }).click();
+
+  const loginLink = page.getByRole('link', { name: 'Login', exact: true });
+  await expect(loginLink).toBeVisible(); // ensures it's available
+  await loginLink.click();
+
+  await page.getByRole('textbox', { name: /Email ID/i }).fill('sayhitosujith@gmail.com');
+  await page.getByRole('textbox', { name: /password/i }).fill('yourPasswordHere');
 });
