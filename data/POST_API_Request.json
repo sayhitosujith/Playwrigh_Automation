@@ -1,6 +1,6 @@
 {
-    "firstname": "{{playwright typescript by SUJITH}}",
-    "lastname": "{{playwright javascript by sadashivareddy}}",
+    "firstname": "playwright typescript by SUJITH",
+    "lastname": "playwright javascript by sadashivareddy",
     "totalprice": 1000,
     "depositpaid": true,
     "bookingdates": {

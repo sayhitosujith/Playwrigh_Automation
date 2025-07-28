@@ -27,4 +27,9 @@ test('create POST API Request using static file in playwright and Typescript', a
     expect(jsonPOSTAPIResponse.booking).toHaveProperty('additionalneeds');
     expect(jsonPOSTAPIResponse.booking.bookingdates).toHaveProperty('checkin');
     expect(jsonPOSTAPIResponse.booking.bookingdates).toHaveProperty('checkout');
+
+    //validate API response body
+    expect(jsonPOSTAPIResponse.bookingid).toBeGreaterThan(0);
+    expect(jsonPOSTAPIResponse.booking.firstname).toBe('playwright typescript by SUJITH');
+    expect(jsonPOSTAPIResponse.booking.lastname).toBe('playwright javascript by sadashivareddy');
 });
