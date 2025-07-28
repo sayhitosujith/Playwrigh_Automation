@@ -90,25 +90,6 @@ jobs:
     needs: run-tests
     if: always()
     steps:
-      - name: Cleanup Playwright Artifacts
-        run: |
-          echo "🔧 Cleaning up Playwright test artifacts..."
-          rm -rf /tmp/playwright* test-results/ playwright-report/
-          echo "✅ Playwright artifacts cleaned."
-
-      - name: Stop and Remove Docker Containers
-        run: |
-          echo "🛑 Checking for running Docker containers..."
-          containers=$(docker ps -aq)
-          if [ -n "$containers" ]; then
-            echo "🛑 Stopping and removing leftover containers..."
-            docker stop $containers || true
-            docker rm $containers || true
-            echo "✅ Docker containers cleaned."
-          else
-            echo "✅ No running Docker containers found."
-          fi
-
       - name: Post Teardown Summary
         run: |
           echo "### Teardown Summary" >> $GITHUB_STEP_SUMMARY
@@ -116,4 +97,6 @@ jobs:
             echo "✅ HTML report was generated and cleaned up." >> $GITHUB_STEP_SUMMARY
           else
             echo "⚠️ HTML report was not found during teardown." >> $GITHUB_STEP_SUMMARY
+          fi
+
 
