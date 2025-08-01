@@ -39,6 +39,13 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
 
+{
+  use: {
+    screenshot: 'only-on-failure',  // capture screenshots on failure
+    video: 'retain-on-failure',     // optional: record videos on failure
+  }
+},
+
     // {
     //   name: 'firefox',
     //   use: { ...devices['Desktop Firefox'] },

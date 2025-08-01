@@ -56,7 +56,7 @@ jobs:
 
       - name: Run Playwright Tests
         run: npx playwright test --reporter=html,line
-        continue-on-error: true
+        continue-on-error: false
 
       - name: Upload HTML Report
         if: always()
@@ -98,5 +98,10 @@ jobs:
           else
             echo "⚠️ HTML report was not found during teardown." >> $GITHUB_STEP_SUMMARY
           fi
-
+      - name: Upload failure screenshots and videos
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results/
 
