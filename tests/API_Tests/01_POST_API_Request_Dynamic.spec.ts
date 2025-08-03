@@ -44,8 +44,8 @@ const postAPIRequest = await formatAPIRequest(jsonTemplate, values);
 
     //validate API response body
     expect(jsonPOSTAPIResponse.bookingid).toBeGreaterThan(0);
-    expect(jsonPOSTAPIResponse.booking.firstname).toBe('{{fname}}');
-    expect(jsonPOSTAPIResponse.booking.lastname).toBe('{{lname}}');
+    expect(jsonPOSTAPIResponse.booking.firstname).toBe('playwright typescript by SUJITH');
+    expect(jsonPOSTAPIResponse.booking.lastname).toBe('playwright javascript by sadashivareddy');
 
     expect(jsonPOSTAPIResponse.booking.bookingdates.checkin).toBe('2018-01-01');
     expect(jsonPOSTAPIResponse.booking.bookingdates.checkout).toBe('2019-01-01');
