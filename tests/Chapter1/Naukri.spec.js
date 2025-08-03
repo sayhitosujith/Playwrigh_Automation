@@ -10,4 +10,6 @@ test('Login to Naukri', async ({ page }) => {
 //enter email and password
   await page.getByRole('textbox', { name: /Email ID/i }).fill('vidhyaln95@gmail.com');
   await page.getByRole('textbox', { name: /password/i }).fill('Qw@12345678');
+  await expect(page.getByRole('button', { name: 'Login', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Login', exact: true }).click();
 });
