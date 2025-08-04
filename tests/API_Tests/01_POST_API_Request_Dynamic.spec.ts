@@ -3,20 +3,26 @@ import { formatAPIRequest } from '../../utils/APIHelper';
 import path from 'path';
 import fs from 'fs';
 
+import { faker, Faker } from '@faker-js/faker';
 
 test.use({
     baseURL: process.env.BASE_API_URL || 'https://restful-booker.herokuapp.com',
 })
 
-test('create POST API Request using dynamic api request body in playwright and Typescript', async ({ request }) => {
+test('create POST API Request using dynamic api request body in playwright and Typescript ', async ({ request }) => {
 
 //Reading json file from the data folder
 const filePath = path.join(__dirname, '../../data/Dynamic_POST_API_Request.json');
 fs.readFileSync(filePath, 'utf-8');
   const jsonTemplate = fs.readFileSync(filePath, 'utf-8');
 
-  const values = ['playwright typescript by SUJITH', 'playwright javascript by sadashivareddy', 1000];
-  
+  const firstName = faker.person.firstName();
+    const lastName = faker.person.lastName();
+    const totalPrice = faker.number.int({ min: 1000, max: 10000 }); // Generate a random number for total price
+
+
+  const values = [firstName, lastName, totalPrice];
+
   // Format the JSON template with the provided values
 const postAPIRequest = await formatAPIRequest(jsonTemplate, values);
 
@@ -44,8 +50,8 @@ const postAPIRequest = await formatAPIRequest(jsonTemplate, values);
 
     //validate API response body
     expect(jsonPOSTAPIResponse.bookingid).toBeGreaterThan(0);
-    expect(jsonPOSTAPIResponse.booking.firstname).toBe('playwright typescript by SUJITH');
-    expect(jsonPOSTAPIResponse.booking.lastname).toBe('playwright javascript by sadashivareddy');
+    expect(jsonPOSTAPIResponse.booking.firstname).toBe(firstName);
+    expect(jsonPOSTAPIResponse.booking.lastname).toBe(lastName);
 
     expect(jsonPOSTAPIResponse.booking.bookingdates.checkin).toBe('2018-01-01');
     expect(jsonPOSTAPIResponse.booking.bookingdates.checkout).toBe('2019-01-01');
