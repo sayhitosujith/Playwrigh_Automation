@@ -6,3 +6,22 @@ export async function formatAPIRequest(template: string,values: any[]): Promise<
     }); 
 }
 
+export async function getPOSTAPIRequestBody(fname:string, lname:string, Price:number, depositpaid:boolean, 
+    additionalneeds:string, checkin:string, checkout:string){
+    // Create a JSON object with the provided values
+
+    const apiRequest : BookingAPI = {
+        firstname: fname,
+        lastname: lname,
+        totalprice: Price,
+        depositpaid: depositpaid,
+        bookingdates: {
+            checkin: checkin,
+            checkout: checkout
+        },
+        additionalneeds: additionalneeds
+    };
+
+    // Convert the JSON object to a string
+    return apiRequest;
+}
